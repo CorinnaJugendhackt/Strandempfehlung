@@ -6,6 +6,9 @@ import os
 import json
 
 owm = pyowm.OWM(API_key = os.environ["APIKEY"])
+def conversionTemp(kelvin):
+	celsius = kelvin-273.15
+	return celsius
 def compareTemperature(temp1, temp2):
 	if (temp1 > temp2):
 		return temp1
@@ -37,10 +40,14 @@ def orte():
 			t2 = w2.get_temperature()
 			ergebnis = compareTemperature(t1["temp"], t2["temp"])
 			if (ergebnis==t1["temp"]):
-				return "Stadt: "+city+", Temperatur: "+str(t1["temp"])
+				t1["temp"]=conversionTemp(t1["temp"])
+				return "Stadt: "+city+", Temperatur: "+str(t1["temp"])+"°C"
 			elif(ergebnis==t2["temp"]):
-				return "Stadt: "+city2+", Temperatur: "+str(t2["temp"])
+				t2["temp"]=conversionTemp(t2["temp"])
+				return "Stadt: "+city2+", Temperatur: "+str(t2["temp"])+"°C"
 			else:
-				return "Stadt: "+city+", Temperatur: "+str(t1["temp"])+"<br />Stadt: "+city2+", Temperatur: "+str(t2["temp"])
+				t1["temp"]=conversionTemp(t1["temp"])
+				t2["temp"]=conversionTemp(t2["temp"])
+				return "Stadt: "+city+", Temperatur: "+str(t1["temp"])+"°C"+"<br />Stadt: "+city2+", Temperatur: "+str(t2["temp"])+"°C"
 	print(ortsliste)
 	#return ortsliste
