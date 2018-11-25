@@ -1,3 +1,5 @@
+#-*- coding: utf-8 -*-
+
 from flask import Flask
 from flask import render_template
 from flask import request
@@ -14,7 +16,7 @@ def compareTemperature(temp1, temp2):
 		return temp1
 	elif (temp2 > temp1):
 		return temp2
-	else: 
+	else:
 		return (temp1, temp2)
 observation = owm.weather_at_place("London")
 print (observation)
@@ -30,13 +32,13 @@ def orte():
 	ortsliste = ort.split(", ")
 	for city in ortsliste:
 		observation = owm.weather_at_place(city)
-		w = observation.get_weather() 
+		w = observation.get_weather()
 		t1 = w.get_temperature()
-		
+
 		for i in range(ortsliste.index(city)+1, len(ortsliste)):
 			city2 = ortsliste[i]
 			observation2 = owm.weather_at_place(city2)
-			w2 = observation2.get_weather() 
+			w2 = observation2.get_weather()
 			t2 = w2.get_temperature()
 			ergebnis = compareTemperature(t1["temp"], t2["temp"])
 			if (ergebnis==t1["temp"]):
